@@ -25,7 +25,7 @@ st.write(f"❌ 負け：{st.session_state.lose} 回")
 # 🎯 掛け金の操作ボタン
 st.write(f"🎯 掛け金: {st.session_state.bet} G")
 
-col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 bet_options = [1, 5, 10, 100, 1000, 10000]
 
 for i, col in enumerate([col1, col2, col3, col4, col5, col6]):
@@ -34,7 +34,16 @@ for i, col in enumerate([col1, col2, col3, col4, col5, col6]):
         if col.button(f"+{amount}G"):
             st.session_state.bet += amount
 
-with col7:
+# ✅ 倍プッシュボタン
+last_bet = st.session_state.get("last_bet", 0)
+double_bet = last_bet * 2
+if last_bet > 0 and st.session_state.G >= st.session_state.bet + double_bet:
+    with col7:
+        if st.button(f"倍プッシュ +{double_bet}G"):
+            st.session_state.bet += double_bet
+
+# 🧼 リセットボタン
+with col8:
     if st.button("リセット"):
         st.session_state.bet = 0
 
