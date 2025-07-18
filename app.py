@@ -37,6 +37,8 @@ if st.button("ギャンブル開始！"):
             st.session_state.win += 1
             st.session_state.message = f"🎉 表です！勝ちました！ +{bet} 円"
 
+        st.rerun()
+
 # メッセージ表示
 if st.session_state.message:
     st.subheader(st.session_state.message)
