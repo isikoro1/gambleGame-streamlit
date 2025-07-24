@@ -1,9 +1,37 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import random
 import time
 
+# 🎵 効果音再生関数
+def play_sound(file_path: str, volume: float = 1.0):
+    components.html(f"""
+        <audio autoplay>
+            <source src="{file_path}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <script>
+            const audio = document.querySelector("audio");
+            if (audio) {{
+                audio.volume = {volume};
+            }}
+        </script>
+    """, height=0)
+
+
 st.set_page_config(page_title="Gamble Game", page_icon="🎰")
+
+# 🎚️ 音量調整スライダーの初期化
+if "volume" not in st.session_state:
+    st.session_state.volume = 1.0
+
+# サイドバーにスライダー表示
+st.sidebar.markdown("🎚️ **音量調整**")
+st.session_state.volume = st.sidebar.slider("音量", 0.0, 1.0, st.session_state.volume, step=0.05)
+
 st.title("🎰 スロット風 Gamble Game")
+
+st.write(f"あたり確率は５０％")
 
 # セッション変数の初期化
 if "G" not in st.session_state:
@@ -35,6 +63,7 @@ for i, col in enumerate([col1, col2, col3, col4, col5, col6]):
     if st.session_state.G >= st.session_state.bet + amount:
         if col.button(f"+{amount}G"):
             st.session_state.bet += amount
+            play_sound("sounds/coin_insert.mp3", st.session_state.volume)
             st.rerun()  # ← 即時反映
 
 # 倍プッシュボタン
@@ -85,6 +114,7 @@ if st.button("スロットを回す！"):
             st.session_state.G += st.session_state.bet
             st.session_state.win += 1
             st.session_state.message = f"🎉 あたり！ +{st.session_state.bet:,} G"
+            play_sound("sounds/jackpot.mp3", st.session_state.volume)
             st.session_state.last_bet = st.session_state.bet
         else:
             reels = random.sample(symbols, 3)
