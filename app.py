@@ -96,6 +96,12 @@ if st.button("スロットを回す！"):
     elif st.session_state.bet > st.session_state.G:
         st.warning("所持金が足りません！")
     else:
+        # 🎵 スロットレバー効果音（ガシャコン）
+        play_sound("sounds/lever_pull.mp3", st.session_state.volume)
+
+        # 🎵 リール回転開始音（ルルル…）
+        play_sound("sounds/reel_spin.mp3", st.session_state.volume)
+
         # スロット演出
         for _ in range(20):
             reels = [random.choice(symbols) for _ in range(3)]
