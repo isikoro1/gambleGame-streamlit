@@ -22,30 +22,35 @@ st.metric(label="所持金", value=f"{st.session_state.G:,} G")
 st.write(f"✅ 勝ち：{st.session_state.win} 回")
 st.write(f"❌ 負け：{st.session_state.lose} 回")
 
-# 🎯 掛け金の操作ボタン
+# 🎯 掛け金の表示
 st.write(f"🎯 掛け金: {st.session_state.bet} G")
 
+# 掛け金入力ボタン行
 col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 bet_options = [1, 5, 10, 100, 1000, 10000]
 
+# 金額追加ボタン
 for i, col in enumerate([col1, col2, col3, col4, col5, col6]):
     amount = bet_options[i]
     if st.session_state.G >= st.session_state.bet + amount:
         if col.button(f"+{amount}G"):
             st.session_state.bet += amount
+            st.rerun()  # ← 即時反映
 
-# ✅ 倍プッシュボタン
+# 倍プッシュボタン
 last_bet = st.session_state.get("last_bet", 0)
 double_bet = last_bet * 2
 if last_bet > 0 and st.session_state.G >= st.session_state.bet + double_bet:
     with col7:
         if st.button(f"倍プッシュ +{double_bet}G"):
             st.session_state.bet += double_bet
+            st.rerun()  # ← 即時反映
 
-# 🧼 リセットボタン
+# リセットボタン
 with col8:
     if st.button("リセット"):
         st.session_state.bet = 0
+        st.rerun()  # ← 即時UIリセット
 
 # 🎰 表示用スロット
 slot_box = st.empty()
@@ -80,11 +85,14 @@ if st.button("スロットを回す！"):
             st.session_state.G += st.session_state.bet
             st.session_state.win += 1
             st.session_state.message = f"🎉 あたり！ +{st.session_state.bet:,} G"
+            st.session_state.last_bet = st.session_state.bet
         else:
             reels = random.sample(symbols, 3)
             st.session_state.G -= st.session_state.bet
             st.session_state.lose += 1
             st.session_state.message = f"😢 はずれ！ -{st.session_state.bet:,} G"
+            st.session_state.last_bet = st.session_state.bet
+
 
         st.session_state.slot_result = reels
         st.session_state.bet = 0
