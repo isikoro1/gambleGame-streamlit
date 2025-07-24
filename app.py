@@ -148,3 +148,7 @@ if st.session_state.G <= 0:
         st.session_state.message = ""
         st.session_state.slot_result = ["❓", "❓", "❓"]
         st.session_state.bet = 0
+
+st.write("🔊 音テストボタン")
+if st.button("再生テスト"):
+    play_sound("sounds/jackpot.mp3", st.session_state.volume)
