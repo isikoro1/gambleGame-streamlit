@@ -8,12 +8,12 @@ def play_sound(file_path: str, volume: float = 1.0):
     components.html(f"""
         <audio autoplay>
             <source src="{file_path}" type="audio/mpeg">
-            Your browser does not support the audio element.
         </audio>
         <script>
             const audio = document.querySelector("audio");
             if (audio) {{
                 audio.volume = {volume};
+                audio.play();
             }}
         </script>
     """, height=0)
@@ -97,10 +97,10 @@ if st.button("スロットを回す！"):
         st.warning("所持金が足りません！")
     else:
         # 🎵 スロットレバー効果音（ガシャコン）
-        play_sound("sounds/lever_pull.mp3", st.session_state.volume)
+        play_sound("/static/lever_pull.mp3", st.session_state.volume)
 
         # 🎵 リール回転開始音（ルルル…）
-        play_sound("sounds/reel_spin.mp3", st.session_state.volume)
+        play_sound("/static/reel_spin.mp3", st.session_state.volume)
 
         # スロット演出
         for _ in range(20):
@@ -120,7 +120,7 @@ if st.button("スロットを回す！"):
             st.session_state.G += st.session_state.bet
             st.session_state.win += 1
             st.session_state.message = f"🎉 あたり！ +{st.session_state.bet:,} G"
-            play_sound("sounds/jackpot.mp3", st.session_state.volume)
+            play_sound("/static/jackpot.mp3", st.session_state.volume)
             st.session_state.last_bet = st.session_state.bet
         else:
             reels = random.sample(symbols, 3)
@@ -151,4 +151,4 @@ if st.session_state.G <= 0:
 
 st.write("🔊 音テストボタン")
 if st.button("再生テスト"):
-    play_sound("sounds/jackpot.mp3", st.session_state.volume)
+    play_sound("/static/jackpot.mp3", st.session_state.volume)
