@@ -1,0 +1,13 @@
+# Pythonの仮想環境
+venv/
+
+# Streamlitの一時ファイルや設定ファイル
+.streamlit/
+
+# __pycache__ や *.pyc などのPythonキャッシュ
+__pycache__/
+*.py[cod]
+
+# OSごとの不要ファイル
+.DS_Store
+Thumbs.db
