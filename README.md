@@ -2,9 +2,9 @@ https://isikoro-gamblegame-app.streamlit.app/#901f1464
 
 # はじめに
 このアプリケーションはisikoro1([X:@mot1173137](https://x.com/mot1173137) )が、
-①[gambleGame](https://github.com/isikoro1/gambleGame) をGUIにアレンジするため
-②Pythonのアプリケーションのデプロイ方法を学習するため
-③ChatGPTでのバイブコーディングを学習するため
+* [gambleGame](https://github.com/isikoro1/gambleGame) をGUIにアレンジするため
+* Pythonのアプリケーションのデプロイ方法を学習するため
+* ChatGPTでのバイブコーディングを学習するため
 に作ったギャンブルシミュレーターです。
 
 # コンセプト
